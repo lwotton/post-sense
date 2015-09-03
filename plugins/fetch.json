@@ -1,0 +1,15 @@
+{
+    "org.apache.cordova.plugin.tts": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/domaemon/org.apache.cordova.plugin.tts.git",
+            "subdir": "."
+        }
+    },
+    "com.wordsbaking.cordova.tts": {
+        "source": {
+            "type": "registry",
+            "id": "com.wordsbaking.cordova.tts"
+        }
+    }
+}

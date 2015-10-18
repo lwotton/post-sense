@@ -3,24 +3,174 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <title>Post-sense</title>
 
         <script type="text/javascript">
 
+    var soundVal;
+    var lightVal;
+    var magnetVal;
+    var gasVal;
+    var tempVal;
+    var moveVal;
+
+    var builtString=" ";
+    
+    var airWordsClean = ['blank','bright','clear','elegant','fresh','graceful','hygienic','immaculate','neat','orderly','pure','simple','spotless', 'tidy','unblemished','washed','cleansed','laundered','shining','sparkling','speckless','stainless','vanilla','delicate','dirtless','faultless','flawless','neat','sanitary','taintless','unpolluted'];
+    var airWordsDirty = ['dirty','filth','polluted','sickening','dangerous','contaminated','infected','poison','violated','spoiled','defiled','depraved'];
+    
+    var tempWordsUp = ['hot','close','blistering','heated','humid','stuffy','summery','tropical','torrid'];
+    var tempWordsDown = ['bleak','colder','sharp','cooler','chillier','brisker'];
+
+    var lightWordsUp = ['bright','dazzling','aglow','alight','illuminated','glossy','glaring','polished','twinkling'];
+    var lightWordsDown = ['black','faint','inky','shadowy','dull','lightless','rayless','gloomy','overcast','dim'];
+
+    var magnetWordsUp = ['increased'];
+    var magnetWordsDown = ['decreased'];
+
+    var soundWordsUp = ['intense','louder','resonant',];
+    var soundWordsDown = ['quieter','serene','calm','quiet'];
+
+    
     function speak(){
     TTS.speak({
-        text: 'luke, you should go the other way',
+        text: string,
         rate: 1,    
     }, function () {
-        alert('success');
+        //alert('success');
     }, function (reason) {
         alert(reason);
     });
-}
-  window.setInterval(function() {speak()},10000);
+
+    }
+
+    function getLight(){
+        $.ajax({
+            type:'GET',
+            url:'https://api.spark.io/v1/devices/190036000947343432313031/lightValue',
+            data:{format:"raw",access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33"},
+            success: function(data) {
+            lightVal = data;
+        }
+      })
+    }
+
+    function getMagnet(){
+        $.ajax({
+            type:'GET',
+            url:'https://api.spark.io/v1/devices/190036000947343432313031/magnetValue',
+            data:{format:"raw",access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33"},
+            success: function(data) {
+            magnetVal = data;
+        }
+      })
+    }
+
+    function getSound(){
+        $.ajax({
+            type:'GET',
+            url:'https://api.particle.io/v1/devices/300026001147343339383037/soundValue',
+            data:{format:"raw",access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33"},
+            success: function(data) {
+            soundVal = data;
+        }
+      })
+    }
+
+    function getMovement(){
+        $.ajax({
+            type:'GET',
+            url:'https://api.spark.io/v1/devices/400030001447343432313031/moveCount',
+            data:{format:"raw",access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33"},
+            success: function(data) {
+            moveVal = data;
+
+        }
+      })
+    }
+
+    function getGas(){
+        $.ajax({
+            type:'GET',
+            url:'https://api.spark.io/v1/devices/54ff6d066678574950280167/gasValue',
+            data:{format:"raw",access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33"},
+            success: function(data) {
+            gasVal = data;
+        }
+      })
+
+    }
+
+    function getTemp(){
+        $.ajax({
+            type:'GET',
+            url:'https://api.spark.io/v1/devices/54ff6d066678574950280167/tempValue',
+            data:{format:"raw",access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33"},
+            success: function(data) {
+            tempVal = data;
+        }
+      })
+
+    }
+    function getVals(){
+
+        getLight();
+        getMagnet();
+        getGas();
+        getTemp();
+        getMovement();
+        getSound();
+    
+    }
+    function buildString(){
+
+       
+
+        if(lightVal < 4000){
+            builtString = builtString + "The light is " + lightWordsUp[Math.floor(Math.random()*lightWordsUp.length)] + ". ";
+        }else{
+            builtString = builtString + "The light is  " + lightWordsDown[Math.floor(Math.random()*lightWordsDown.length)] + ". ";
+        }
+        if(magnetVal > 2152){
+            builtString = builtString + "Also the magnetic fields are " + magnetWordsUp[Math.floor(Math.random()*magnetWordsUp.length)] + ". ";
+        }else{
+            builtString = builtString + "Also, I sense no change in the magnetic fields. "
+        }
+        if(gasVal > 5){
+            builtString = builtString + "Be aware, there's something in the air. It may be " + airWordsDirty[Math.floor(Math.random()*airWordsDirty.length)] + ". ";
+        }else{
+            builtString = builtString + "The air seems " + airWordsClean[Math.floor(Math.random()*airWordsClean.length)] + ". ";
+        }
+        if(tempVal < 1656){
+            builtString = builtString + "The temperature is getting " + tempWordsUp[Math.floor(Math.random()*tempWordsUp.length)] + ". ";
+        }else{
+            builtString = builtString + "The temperature is getting " + tempWordsDown[Math.floor(Math.random()*tempWordsDown.length)] + ". ";
+        }
+        builtString = builtString + "The movement around is " + moveVal + ". ";
+        if(soundVal > 136){
+            builtString = builtString + "It sounds " + soundWordsUp[Math.floor(Math.random()*soundWordsUp.length)] + ". ";
+        }else{
+            builtString = builtString + "It sounds " + soundWordsDown[Math.floor(Math.random()*soundWordsDown.length)] + ". ";
+        }
+
+        TTS.speak({
+        text: builtString,
+        rate: 1,    
+    }, function () {
+        //alert('success');
+    }, function (reason) {
+        alert(reason);
+    });
+
+        //alert(builtString);
+        builtString = " ";
+    }
+
+  window.setInterval(function() {getVals()},5000);  
+  window.setInterval(function() {buildString()},20000);
 
 </script>    
     </head>

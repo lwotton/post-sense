@@ -11,6 +11,10 @@
                         {
                             "xml": "<feature name=\"TTS\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.TTS\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -32,6 +36,9 @@
             "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "com.wordsbaking.cordova.tts": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "nl.x-services.plugins.insomnia": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },

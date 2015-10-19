@@ -13,13 +13,21 @@ module.exports = [
         "clobbers": [
             "TTS"
         ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.insomnia/www/Insomnia.js",
+        "id": "nl.x-services.plugins.insomnia.Insomnia",
+        "clobbers": [
+            "window.plugins.insomnia"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "org.apache.cordova.plugin.tts": "0.2.1",
-    "com.wordsbaking.cordova.tts": "0.2.1"
+    "com.wordsbaking.cordova.tts": "0.2.1",
+    "nl.x-services.plugins.insomnia": "4.0.1"
 }
 // BOTTOM OF METADATA
 });

@@ -4,17 +4,19 @@
     <feature name="TTS">
         <param name="android-package" value="org.apache.cordova.plugin.TTS" />
     </feature>
+    <feature name="Insomnia">
+        <param name="android-package" value="nl.xservices.plugins.Insomnia" />
+    </feature>
     <feature name="TTS">
         <param name="android-package" value="com.wordsbaking.cordova.tts.TTS" />
         <param name="onload" value="true" />
     </feature>
-    <name>HelloCordova</name>
+    <name>Post-sense</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Post-sense - a exploration into cybernetics.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="luke@lukewotton.com" href="http://lukewotton.com">
+    	Luke Wotton
     </author>
-    <content src="index.html" />
     <access origin="*" />
 </widget>

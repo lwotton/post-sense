@@ -121,16 +121,69 @@
         getMagnet();
         getGas();
         getTemp();
-        getMovement();
         getSound();
     
     }
+
+    function vibrateAll(){
+
+        vibrateAir();
+        vibrateLight();
+        vibrateSound();
+    }
+
+    function vibrateMovement(){
+
+      $.ajax({
+        type:'POST',
+        url:'https://api.spark.io/v1/devices/400030001447343432313031/shake',
+        data:{access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33",args:"on"},
+        success: function(data) {
+          //nothing
+        }
+      })
+    }
+
+    function vibrateAir(){
+         $.ajax({
+        type:'POST',
+        url:'https://api.spark.io/v1/devices/54ff6d066678574950280167/shake',
+        data:{access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33",args:"on"},
+        success: function(data) {
+          //nothing
+        }
+      })
+    }
+
+    function vibrateLight(){
+         $.ajax({
+        type:'POST',
+        url:'https://api.spark.io/v1/devices/190036000947343432313031/shake',
+        data:{access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33",args:"on"},
+        success: function(data) {
+          //nothing
+        }
+      })
+    }
+
+    function vibrateSound(){
+         $.ajax({
+        type:'POST',
+        url:'https://api.spark.io/v1/devices/300026001147343339383037/shake',
+        data:{access_token:"5d07ff2c540108c4a348c5b26593622ce1124e33",args:"on"},
+        success: function(data) {
+          //nothing
+        }
+      })
+    }
+    
     function buildString(){
 
        
 
         if(lightVal < 4000){
             builtString = builtString + "The light is " + lightWordsUp[Math.floor(Math.random()*lightWordsUp.length)] + ". ";
+            vibrateLight();
         }else{
             builtString = builtString + "The light is  " + lightWordsDown[Math.floor(Math.random()*lightWordsDown.length)] + ". ";
         }
@@ -141,19 +194,23 @@
         }
         if(gasVal > 5){
             builtString = builtString + "Be aware, there's something in the air. It may be " + airWordsDirty[Math.floor(Math.random()*airWordsDirty.length)] + ". ";
+            vibrateAir();
         }else{
             builtString = builtString + "The air seems " + airWordsClean[Math.floor(Math.random()*airWordsClean.length)] + ". ";
         }
         if(tempVal < 1656){
             builtString = builtString + "The temperature is getting " + tempWordsUp[Math.floor(Math.random()*tempWordsUp.length)] + ". ";
+            vibrateAir();
         }else{
             builtString = builtString + "The temperature is getting " + tempWordsDown[Math.floor(Math.random()*tempWordsDown.length)] + ". ";
         }
         builtString = builtString + "The movement around is " + moveVal + ". ";
         if(soundVal > 136){
             builtString = builtString + "It sounds " + soundWordsUp[Math.floor(Math.random()*soundWordsUp.length)] + ". ";
+            vibrateSound();
         }else{
             builtString = builtString + "It sounds " + soundWordsDown[Math.floor(Math.random()*soundWordsDown.length)] + ". ";
+            vibrateSound();
         }
 
         TTS.speak({
@@ -169,20 +226,16 @@
         builtString = " ";
     }
 
-  window.setInterval(function() {getVals()},5000);  
-  window.setInterval(function() {buildString()},20000);
+  window.setInterval(function() {getVals()},10000);  
+  window.setInterval(function() {buildString()},60000);
+  window.plugins.insomnia.keepAwake()
 
 </script>    
     </head>
 
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
+    <body style="bgcolor:#000000">
+        <h1 style="margin-top:50px; margin-bottom:50px;">POST-SENSE</h1>
+        <img align src="img/post-logo.png" />
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
